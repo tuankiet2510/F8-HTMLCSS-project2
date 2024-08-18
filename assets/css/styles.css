@@ -1,0 +1,735 @@
+/* Common */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --primary-color: #ffb900;
+  --content-width: 1170;
+  --blog-item-width: 370;
+  --white-color: #fff;
+  --color-heading: #171100;
+  --font-heading: Sen, sans-serif;
+}
+html {
+  font-size: 62.5%; /* dua root ve 1rem = 10px thay vi 16px */
+  font-weight: 400;
+}
+body {
+  font-size: 1.6rem; /* dua font size body ve 16px nhu df */
+  font-family: "Poppins", sans-serif;
+}
+.main-content {
+  /* width: var(--content-width); */
+  width: calc(var(--content-width) * 1px);
+  /* Giới hạn lại chiều rộng khi màn hình thu nhỏ tránh việc item tràn ra xuất hiện scroll bar */
+  max-width: calc(100% - 48px);
+  margin-inline: auto; /*căn giữa*/
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+}
+.btn {
+  display: inline-block;
+  color: var(--white-color);
+  text-align: center;
+  font-weight: 600;
+  background: #171100;
+  min-width: 118px;
+  border-radius: 999px;
+  /* line-height: 50px; */
+  /* padding: ; */
+}
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+}
+.lv1 {
+  font-size: 5.8rem;
+  line-height: calc(68 / 58);
+  letter-spacing: -0.116rem;
+}
+.lv2 {
+  font-size: 3.8rem;
+  line-height: calc(48 / 38);
+  letter-spacing: -0.076rem;
+}
+.word-break-all {
+  word-break: break-all;
+}
+button {
+  background: transparent;
+  border: none;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.dots {
+  display: flex;
+  gap: 6px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #634700;
+}
+.active-dot {
+  background: var(--primary-color);
+  cursor: default;
+}
+.desc {
+  color: #5f5b53;
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--line-clamp, 1);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp.line-2 {
+  --line-clamp: 2;
+}
+/* === Header === */
+.fixed-header {
+  /* background: #000; */
+  background: #fffcf4;
+  z-index: 1;
+  position: sticky;
+  padding: 36px 0 8px;
+  top: -28px;
+}
+.fixed-header .header {
+  display: flex;
+  align-items: center;
+  /* padding-top: 36px; */
+}
+.fixed-header .nav {
+  /* Button action ở sau cũng đươc đẩy theo qua phải */
+  margin-left: auto;
+}
+.fixed-header .nav-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fixed-header .nav-list a {
+  color: #5f5b53;
+  font-size: 1.6rem;
+  /* line-height: 28px; 175% */
+  /* line-height: 1.75; */
+  padding: 8px 21px;
+}
+.nav-list a:hover,
+.nav-list .active a {
+  color: #171100;
+  /* font-weight: 600; */
+  text-shadow: 1px 0 0 currentColor; /*Dùng tshadow thay fontweight vì fontweight làm dãn thẻ a ra , khi hover vào sẽ làm item nhảy đẩy các item */
+  position: relative;
+}
+.nav-list .active a::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: #171100;
+  left: 21px; /* Vi a cos khoang padding-inline 21px */
+  bottom: 6px;
+}
+.fixed-header .action {
+  /* Khoang cach giua nav-list a cuoi cung va action la 70, tru di khoang padding cua a ta co ml can them vao */
+  margin-left: calc(70px - 21px);
+}
+.fixed-header .action .sign-up-btn {
+  font-size: 1.6rem;
+  /* line-height: 28px; 175% */
+  line-height: 1.75;
+  padding: 11px 41px;
+  min-width: 144px;
+  border-radius: 24.5px;
+}
+/* === Main === */
+.hero {
+  background: #fffcf4;
+  /* padding-block: 65px; */
+  padding: calc(64px - 8px) 0 65px;
+}
+.hero .hero-body {
+  display: flex;
+  /* gap: 230px; */
+  align-items: center;
+}
+/* hero left */
+.hero .media-block {
+  position: relative;
+  width: calc((470 / var(--content-width)) * 100%);
+}
+.hero .media-block .hero-image {
+  width: 470px;
+  height: 685px;
+  object-fit: cover;
+  border-radius: 20px;
+  /* Các dạng thẻ inline sẽ co 1 khoảng trắng dưới đáy , vì các text bắt đầu từ baseline nên sẽ chừa 1 phần ở dưới cho các chữ có đuôi xuống dưới  */
+  /* display: block; */
+  vertical-align: bottom;
+}
+.hero .media-block .hero-summary {
+  width: 270px;
+  height: 244px;
+  position: absolute;
+  left: 300px;
+  bottom: 48px;
+  border-radius: 12px;
+  background: var(--white-color);
+  box-shadow: 0px 16px 32px 0px rgba(0, 0, 0, 0.05);
+  padding-block: 28px;
+  padding-left: 24px;
+}
+.hero-summary .hero-list {
+}
+.hero-summary .hero-list .hero-item {
+  display: flex;
+  align-items: center;
+}
+.hero-summary .hero-list .hero-item + .hero-item {
+  margin-top: 14px;
+}
+.hero-summary .hero-item .hero-icon {
+  padding: 12px;
+  border-radius: 50%;
+  background: #fff9e8;
+}
+.hero-summary .hero-item:nth-of-type(2) .hero-icon {
+  background: #fcefff;
+}
+.hero-summary .hero-item:nth-of-type(3) .hero-icon {
+  background: #ebeaff;
+}
+.hero-summary .hero-item .hero-info {
+  margin-left: 16px;
+}
+.hero-item .hero-info .desc {
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+}
+.hero-item .hero-info .title {
+  color: #171100;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: calc(30 / 18);
+}
+/* heor right */
+.hero .content-block {
+  /* width: 52%; */
+  /* Tuy đã chia 48 52 nhưng 2 khối left right đang dính nhau  */
+  /* padding: 0 0 0 230px; */
+  /* margin-left: 230px; */
+  margin-left: auto;
+  width: calc((470 / var(--content-width)) * 100%);
+  /* line-height: 64px; */
+}
+.hero .content-block .heading {
+}
+.hero .content-block .desc {
+  margin-top: 22px;
+  /* Dùng mgtop 22px sẽ gây ra margin-collap giữa cta-course thẻ p.desc ngay dưới (Recent engagment) => Đúng cái ta cần */
+  font-size: 1.8rem;
+  /* line-height: 30px; 166.667% */
+  line-height: calc(30 / 18);
+}
+.hero .content-block .cta-course {
+  display: flex;
+  margin: 38px 0px 48px;
+  align-items: center;
+}
+.hero .cta-course .btn {
+  min-width: 180px;
+  font-size: 1.8rem;
+  line-height: calc(30 / 18);
+  /* line-height: calc(64 / 18); */
+  border-radius: 32px;
+  background: var(--primary-color);
+  padding: 17px 34px;
+}
+.hero .cta-course .watch-video {
+  display: flex;
+  align-items: center;
+  /* background: var(--white-color); */
+  cursor: pointer;
+  margin-left: 28px;
+}
+.cta-course .watch-video .icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--white-color);
+
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+}
+
+.hero .cta-course span {
+  /* display: block; */
+  color: var(--color-heading);
+  font-size: 1.8rem;
+  font-weight: 600;
+  /* line-height: 30px; 166.667% */
+  line-height: calc(30 / 18);
+  margin-left: 14px;
+  min-width: 148px;
+}
+.hero .content-block .stats {
+  margin-left: -28px;
+  margin-top: 8px; /*ghi de la mt 22px cua .desc */
+}
+.hero .content-block .desc strong {
+  color: #171100;
+  font-family: var(--font-heading);
+  font-size: 4.4rem;
+  font-weight: 700;
+  /* line-height: 54px; 122.727% */
+  /* line-height: 6.4rem;  */
+  padding: 0 8px 0 28px;
+}
+/* ==== popular-course ==== */
+.popular-course {
+  padding-block: 200px;
+}
+.popular-course .popular-top {
+  display: flex;
+  justify-content: space-between;
+}
+.popular-course .popular-top .info {
+}
+.popular-top .info .heading {
+  margin-bottom: 15px;
+}
+.popular-course .popular-top .info .desc {
+  /* margin-top: 15px; Ảnh hưởng đến các desc trong course item */
+  font-size: 1.8rem;
+  /* line-height: 30px; 166.667% */
+  line-height: calc(30 / 18);
+}
+
+.popular-course .controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.popular-course .controls .ctrl-btn {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+}
+.popular-course .controls .ctrl-btn:hover {
+  color: var(--white-color);
+  background: var(--primary-color);
+  cursor: pointer;
+}
+/* .popular-course .controls .ctrl-btn:last-of-type {
+  background: var(--primary-color);
+} */
+/* Popular-bottom */
+.popular-course .course-list {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 55px;
+  gap: 30px;
+}
+.popular-course .course-item {
+}
+.popular-course .course-item .thumb {
+  width: 370px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px 12px 0px 0px;
+}
+.popular-course .course-item .info {
+  padding: 16px 22px 22px;
+}
+.popular-course .info .head,
+.popular-course .head .rating,
+.popular-course .info .foot {
+  /* margin-bottom :6px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.popular-course .head .title {
+  color: #171100;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: calc(30 / 18);
+  padding-right: 48px;
+}
+.popular-course .head .rating .star-value {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: calc(26 / 18);
+  padding-left: 6px;
+}
+.popular-course .course-list .info .desc {
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+  /* padding-block: 6px 12px; */
+  margin-block: 6px 12px;
+}
+.popular-course .info .foot .price {
+  color: #171100;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: calc(30 / 18);
+}
+.popular-course .info .foot .book-btn {
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+  padding: 12px 24px;
+}
+
+/* ==== Feedback === */
+.feedback {
+  padding-block: 96px;
+  background: #2e2100;
+}
+
+.feedback .feedback-list {
+  display: flex;
+  overflow: hidden; /* Ẩn các feed-back item bị trồi ra , chỉ chừa lại fbitem đầu tiên */
+}
+.feedback .feedback-list .feedback-item {
+  flex-shrink: 0; /* Tra ve kich thuoc that , khong bi co lai */
+  width: 100%; /* bang kich thuoc fblist = feedback */
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+/* Dung js them class nay vao */
+.switch {
+  transform: translateX(-100%);
+  transition: all ease 0.3s;
+}
+.feedback .feedback-list .feedback-item .info {
+}
+.feedback .feedback-item .info .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.feedback .feedback-item .info .name {
+  color: #f7f7f7;
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: calc(34 / 24);
+}
+.feedback .feedback-item .info .role {
+  color: #bfbcb2;
+  font-size: 1.4rem;
+  font-weight: 400;
+  /* line-height: 26px; 185.714% */
+  line-height: calc(26 / 14);
+}
+.feedback .feedback-item .info .dots {
+  display: inline-flex;
+  margin-top: 28px;
+}
+
+.feedback .feedback-list .feedback-item .content {
+  width: calc((740 / var(--content-width)) * 100%);
+  margin-left: auto;
+}
+.feedback .feedback-item .content blockquote {
+  color: #fff;
+  font-size: 2.6rem;
+  font-style: italic;
+  line-height: calc(40 / 26);
+}
+/* ==== Feature ==== */
+.feature-list {
+  padding-block: 100px;
+}
+.features {
+  /* padding-block: 200px; */
+  /* padding-top: 200px; */
+  padding-block: 100px;
+}
+.features .body {
+  display: flex;
+  justify-content: space-between;
+}
+.features .body .images {
+  display: flex;
+  gap: 0 30px;
+}
+.features .body .images img {
+  width: 270px;
+  height: 404px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+.features .body .images .lower {
+  /* Dùng flex cho images giải quyết margin-collapse => margin-top sẽ chỉ đẩy mỗi lower thay vì đẩy toàn bộ images */
+  margin-top: 34px;
+}
+.features .body .content {
+  width: calc((470 / var(--content-width)) * 100%);
+  /* margin-left: auto; */
+}
+.features .content .heading {
+}
+.features .content .desc {
+  margin-right: 12px;
+  margin-top: 16px;
+  font-size: 1.6rem;
+  line-height: calc(28 / 16);
+}
+.features .content .cta-btn {
+  border-radius: 26px;
+  background: var(--primary-color);
+  padding: 11px 37px;
+  font-size: 1.6rem;
+  line-height: calc(28 / 16);
+  min-width: 137px;
+  margin-top: 32px;
+}
+/* feature-sec */
+
+.feature-sec .body {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.feature-sec .body .content {
+  width: calc((570 / var(--content-width)) * 100%);
+}
+.feature-sec .body .images img {
+  width: 470px;
+  height: 440px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+/* === Blog == */
+.blog {
+  background: #fffcf4;
+  padding-block: 96px;
+}
+.blog .blog-top {
+  width: calc((448 / var(--content-width)) * 100%);
+  margin-inline: auto;
+  text-align: center;
+}
+.blog .blog-top .heading.lv2 {
+}
+.blog .blog-top .desc {
+  color: #696262;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: calc(28 / 16); /* 175% */
+  margin-top: 16px;
+}
+.blog .blog-list {
+  display: flex;
+  /* justify-content: space-between; */
+  padding-block: 55px 38px;
+  gap: 30px;
+  overflow: hidden;
+  padding-bottom: 55px;
+}
+.blog .blog-list .blog-item {
+  /* width: calc((100% / 3) - 20px); */
+  width: calc((var(--blog-item-width) / var(--content-width)) * 100%);
+  flex-shrink: 0; /* cac item se ko bi co lai , chi hien thi 3 item */
+  background: var(--white-color);
+  border-radius: 16px;
+  overflow: hidden; /* Thay the cho border-radius-top ở dưới thumb */
+}
+.blog .blog-item .thumb {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+
+  /* border-radius: 16px 16px 0px 0px; */
+}
+.blog .blog-item .info {
+  /* Việc chỉ định width ở đây sẽ làm cho content bị thu nhỏ lại  */
+  /* width: calc((330 / var(--blog-item-width)) * 100%); */
+  padding: 20px 20px 28px;
+}
+.blog .info .date {
+  color: #5f5b53;
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 12px;
+}
+.blog .info .date::before {
+  content: "";
+  /* display: inline-block; */
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  margin-right: 4px;
+  /* position: absolute; */
+}
+.blog .info .date::after {
+  content: "";
+  position: absolute;
+  /* width: 160px; */
+  left: 0;
+  right: calc((-27 / 123) * 100%);
+  bottom: 0;
+  height: 1px;
+  border-radius: 0.5px;
+  background: #c2beb6;
+}
+.blog .info .desc {
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+}
+.blog .info .title a {
+  color: var(--color-heading);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: calc(28 / 16);
+  display: inline-block;
+  margin-block: 12px;
+}
+.blog .info .btn {
+  padding: 12px 21px;
+  /* background: var(--primary-color); */
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+}
+.blog .dots {
+  justify-content: center;
+}
+/* ==== footer ==== */
+footer {
+  background: #2e2100;
+  padding-top: 96px;
+  /* padding-block: 96px 38px; */
+  color: #bfbcb2;
+}
+footer .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 130px;
+  padding-bottom: 38px;
+  position: relative;
+}
+footer .row::after {
+  position: absolute;
+  content: "";
+  background: #59554b;
+  height: 1px;
+  width: 100%;
+  bottom: 0;
+}
+footer .row .col {
+  min-width: calc((130 / var(--content-width)) * 100%);
+}
+footer .row .col:first-child {
+  width: calc((267 / var(--content-width)) * 100%);
+}
+
+footer .row .col:last-child {
+  width: calc((231 / var(--content-width)) * 100%);
+}
+footer .col .title {
+  color: var(--white-color);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: calc(28 / 16);
+  position: relative;
+  padding-bottom: 14px;
+}
+footer .col:not(:first-child) .title::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  background: #59554b;
+  height: 1.5px;
+}
+footer .row .col:first-child .title {
+  color: var(--white-color);
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: calc(34 / 24);
+  position: relative;
+  padding-bottom: 0;
+  /* display: inline-flex; */
+}
+/* Ghi đè lên dấu . */
+footer .row .col:first-child .title::after {
+  color: var(--primary-color);
+  content: ".";
+  bottom: 0;
+  transform: translateX(-100%);
+  position: absolute;
+}
+/* Phan text ngay duoi title cua col dau tien */
+footer .desc {
+  color: #bfbcb2;
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+  padding-block: 18px;
+}
+
+footer .row .col:first-child .socials {
+  display: inline-flex;
+  gap: calc((((((111 - 18) - 9) - 15) - 15) / 3) * 1px);
+}
+
+footer .col .col-list {
+  padding-top: 28px;
+}
+footer .col .col-list li + li {
+  margin-top: 12px;
+}
+footer .col .col-list li a {
+  color: #bfbcb2;
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+}
+
+footer .col-list li a strong {
+  color: var(--white-color);
+  font-size: 1.4rem;
+  font-weight: 600px;
+  line-height: calc(26 / 14);
+}
+footer .copy-right {
+  color: #807d74;
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: calc(26 / 14);
+  padding-block: 28px;
+}
